@@ -2,9 +2,9 @@
 
 [![CI/CD Pipeline](https://github.com/Rehan135236/Bankmind-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/Rehan135236/Bankmind-AI/actions/workflows/ci.yml)
 ![Evaluation](https://img.shields.io/badge/Evaluation-50%2F50%20Passed%20(100%25)-emerald?style=for-the-badge)
-![Latency](https://img.shields.io/badge/Avg%20Latency-135.5%20ms-teal?style=for-the-badge)
+![Latency](https://img.shields.io/badge/Avg%20Latency-382.1%20ms%20(Cloud%20Vector)-teal?style=for-the-badge)
 ![Database](https://img.shields.io/badge/PostgreSQL-Neon%2018.6%20Cloud-blue?style=for-the-badge)
-![Vector DB](https://img.shields.io/badge/Vector%20Store-ChromaDB%20Persistent-purple?style=for-the-badge)
+![Vector DB](https://img.shields.io/badge/Vector%20Store-Pinecone%20Serverless%20%2B%20Chroma-purple?style=for-the-badge)
 ![Stack](https://img.shields.io/badge/Frontend-Next.js%2016%20TypeScript-black?style=for-the-badge)
 
 > **BankMate AI** is a production-style, multi-bank artificial intelligence banking support platform designed for commercial banks, branchless banking providers, digital wallets, and fintechs in Pakistan. Powered by Retrieval-Augmented Generation (RAG), it delivers accurate, source-grounded banking answers with page-level citations, strict provider isolation, and zero-hallucination guardrails.
@@ -62,7 +62,7 @@ graph TD
 
     subgraph Storage Layer
         Neon[(Neon PostgreSQL 18.6 Cloud Database)]
-        Chroma[(ChromaDB Persistent Vector Store)]
+        Pinecone[(Pinecone Serverless AWS us-east-1 + ChromaDB Fallback)]
         Embeddings[all-MiniLM-L6-v2 Local Embeddings]
     end
 

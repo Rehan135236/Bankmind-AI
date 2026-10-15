@@ -156,6 +156,10 @@ class DocumentService:
             existing_doc = result.scalar_one_or_none()
             if not existing_doc:
                 file_path = seed["path"]
+                if not os.path.exists(file_path):
+                    alt_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "seeds", os.path.basename(file_path)))
+                    if os.path.exists(alt_path):
+                        file_path = alt_path
                 if os.path.exists(file_path):
                     with open(file_path, "r", encoding="utf-8") as f:
                         content = f.read()

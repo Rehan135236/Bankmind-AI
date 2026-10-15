@@ -11,7 +11,11 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite+aiosqlite:///./bankmate.db"
     SYNC_DATABASE_URL: str = "sqlite:///./bankmate.db"
     
-    # Vector DB & Embeddings
+    # Vector DB (Pinecone Cloud or Local ChromaDB)
+    VECTOR_STORE_BACKEND: str = "auto"
+    PINECONE_API_KEY: str = ""
+    PINECONE_INDEX_NAME: str = "bankmate-ai"
+    PINECONE_ENVIRONMENT: str = "us-east-1"
     CHROMA_PERSIST_DIR: str = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "chroma_db"))
     EMBEDDING_MODEL_NAME: str = "all-MiniLM-L6-v2"
     CHUNK_SIZE: int = 700
@@ -43,7 +47,11 @@ class Settings(BaseSettings):
     ALLOWED_EXTENSIONS: List[str] = [".pdf", ".txt", ".md", ".html"]
     
     class Config:
-        env_file = ".env"
+        env_file = (
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".env")),
+            os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", ".env")),
+            ".env"
+        )
         extra = "ignore"
 
     def get_async_database_url(self) -> str:
