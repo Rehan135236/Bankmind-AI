@@ -23,8 +23,8 @@ services:
 
   frontend:
     build:
-      context: ./frontend
-      dockerfile: ../Dockerfile.frontend
+      context: .
+      dockerfile: Dockerfile.frontend
     container_name: bankmate-frontend
     ports:
       - "3000:3000"

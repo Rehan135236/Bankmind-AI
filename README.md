@@ -1,6 +1,7 @@
 # BankMate AI — Multi-Bank Intelligent Banking Support Agent with RAG
 
-![Build & Test](https://img.shields.io/badge/Evaluation-50%2F50%20Passed%20(100%25)-emerald?style=for-the-badge)
+[![CI/CD Pipeline](https://github.com/Rehan135236/Bankmind-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/Rehan135236/Bankmind-AI/actions/workflows/ci.yml)
+![Evaluation](https://img.shields.io/badge/Evaluation-50%2F50%20Passed%20(100%25)-emerald?style=for-the-badge)
 ![Latency](https://img.shields.io/badge/Avg%20Latency-135.5%20ms-teal?style=for-the-badge)
 ![Database](https://img.shields.io/badge/PostgreSQL-Neon%2018.6%20Cloud-blue?style=for-the-badge)
 ![Vector DB](https://img.shields.io/badge/Vector%20Store-ChromaDB%20Persistent-purple?style=for-the-badge)
