@@ -240,81 +240,108 @@ export default function KnowledgeBasePage() {
   const historicalDocs = documents.filter((d) => d.verification_status === "historical").length;
   const unverifiedDocs = documents.filter((d) => d.verification_status === "unverified").length;
 
-  // 1. Staff Authentication Gate
+  // 1. Staff Authentication Gate - Restricted Compliance Portal
+  const [showStaffLogin, setShowStaffLogin] = useState(false);
+
   if (!isAuthenticated && !authChecking) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center p-4 bg-slate-950 text-white">
-        <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-          <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mb-6">
-            <Lock className="w-6 h-6" />
+      <div className="min-h-[85vh] flex items-center justify-center p-4 bg-slate-950 text-white">
+        <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-200 text-center">
+          <div className="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center mx-auto mb-5">
+            <Lock className="w-7 h-7" />
           </div>
 
-          <h2 className="text-xl font-bold text-white mb-1.5">
-            Tariff & Compliance CMS
+          <div className="inline-block px-3 py-1 bg-amber-500/10 border border-amber-500/30 rounded-full text-amber-400 text-[11px] font-bold uppercase tracking-wider mb-3">
+            Internal Compliance Portal
+          </div>
+
+          <h2 className="text-xl font-bold text-white mb-2">
+            Restricted Banking Registry
           </h2>
           <p className="text-xs text-slate-400 leading-relaxed mb-6">
-            Restricted gateway for banking compliance officers and administrators to manage official schedules of charges, document versions, and vector synchronization.
+            Access to this document indexing and tariff registry system is strictly limited to authorized State Bank of Pakistan compliance auditors and registered banking administrators. Unauthorized access attempts are monitored and recorded.
           </p>
 
-          <form onSubmit={handleStaffLogin} className="space-y-4">
-            {loginError && (
-              <div className="p-3 bg-red-950/60 border border-red-800 text-red-300 text-xs rounded-xl flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                <span>{loginError}</span>
+          {!showStaffLogin ? (
+            <div className="space-y-3">
+              <Link
+                href="/chat"
+                className="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Return to Public Banking Assistant</span>
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => setShowStaffLogin(true)}
+                className="w-full py-2.5 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl transition-all flex items-center justify-center gap-1.5"
+              >
+                <KeyRound className="w-3.5 h-3.5 text-slate-400" />
+                <span>Authorized Personnel Authentication</span>
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={handleStaffLogin} className="space-y-4 text-left pt-2">
+              {loginError && (
+                <div className="p-3 bg-red-950/60 border border-red-800 text-red-300 text-xs rounded-xl flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span>{loginError}</span>
+                </div>
+              )}
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                  Compliance Officer Email
+                </label>
+                <input
+                  type="email"
+                  value={loginEmail}
+                  onChange={(e) => setLoginEmail(e.target.value)}
+                  placeholder="name@bankmate.ai"
+                  className="w-full px-3.5 py-2.5 text-xs bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-white placeholder-slate-500"
+                  required
+                />
               </div>
-            )}
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Staff ID / Authorized Email
-              </label>
-              <input
-                type="email"
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
-                placeholder="compliance@bankmate.ai"
-                className="w-full px-3.5 py-2.5 text-xs bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-white placeholder-slate-500"
-                required
-              />
-            </div>
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                  Security Passcode
+                </label>
+                <input
+                  type="password"
+                  value={loginPassword}
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                  placeholder="••••••••••••"
+                  className="w-full px-3.5 py-2.5 text-xs bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-white placeholder-slate-500"
+                  required
+                />
+              </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Security Passcode
-              </label>
-              <input
-                type="password"
-                value={loginPassword}
-                onChange={(e) => setLoginPassword(e.target.value)}
-                placeholder="••••••••••••"
-                className="w-full px-3.5 py-2.5 text-xs bg-slate-950 border border-slate-800 rounded-xl focus:outline-none focus:border-emerald-500 text-white placeholder-slate-500"
-                required
-              />
-            </div>
+              <div className="flex gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setShowStaffLogin(false)}
+                  className="flex-1 py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={loginLoading}
+                  className="flex-2 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+                >
+                  <KeyRound className="w-4 h-4" />
+                  <span>{loginLoading ? "Verifying..." : "Verify & Enter"}</span>
+                </button>
+              </div>
+            </form>
+          )}
 
-            <div className="p-3 bg-slate-950/80 rounded-xl border border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
-              <span>Demo Staff Credentials:</span>
-              <span className="font-mono text-emerald-400 font-semibold">admin@bankmate.ai</span>
-            </div>
-
-            <button
-              type="submit"
-              disabled={loginLoading}
-              className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
-            >
-              <KeyRound className="w-4 h-4" />
-              <span>{loginLoading ? "Authenticating..." : "Unlock Compliance CMS"}</span>
-            </button>
-          </form>
-
-          <div className="mt-6 pt-4 border-t border-slate-800 text-center">
-            <Link
-              href="/chat"
-              className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Return to Public Banking Assistant</span>
-            </Link>
+          <div className="mt-8 pt-4 border-t border-slate-800 text-center">
+            <span className="text-[11px] text-slate-500">
+              State Bank of Pakistan (SBP) Framework for Digital Financial Services
+            </span>
           </div>
         </div>
       </div>
