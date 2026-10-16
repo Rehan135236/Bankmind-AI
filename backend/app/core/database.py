@@ -8,6 +8,8 @@ async_engine = create_async_engine(
     settings.get_async_database_url(),
     echo=False,
     future=True,
+    pool_pre_ping=True,
+    pool_recycle=300,
     connect_args={"check_same_thread": False} if "sqlite" in settings.DATABASE_URL else {}
 )
 
@@ -24,6 +26,8 @@ sync_engine = create_engine(
     settings.get_sync_database_url(),
     echo=False,
     future=True,
+    pool_pre_ping=True,
+    pool_recycle=300,
     connect_args={"check_same_thread": False} if "sqlite" in settings.SYNC_DATABASE_URL else {}
 )
 
