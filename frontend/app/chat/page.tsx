@@ -99,7 +99,7 @@ function ChatContent() {
       id: "welcome",
       sender: "assistant",
       content:
-        "Welcome to **BankMate AI**! I am an intelligent banking support agent grounded strictly in official Pakistani banking documents, schedules of charges, and State Bank of Pakistan regulations.\n\nSelect a provider or general banking mode above to begin asking questions.",
+        "Welcome to **BankMate**. I am an official banking support assistant grounded strictly in verified Pakistani banking disclosures, published schedules of charges, and State Bank of Pakistan regulations.\n\nSelect an institution above or ask any question regarding transaction limits, fee schedules, card charges, or regulatory circulars below.",
       retrieval_mode: "grounded_retrieval_only",
     }
   ]);
@@ -108,10 +108,19 @@ function ChatContent() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedCitations, setExpandedCitations] = useState<Record<string, boolean>>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const initialQueryExecuted = useRef(false);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  useEffect(() => {
+    const qParam = searchParams?.get("q");
+    if (qParam && qParam.trim() && !initialQueryExecuted.current) {
+      initialQueryExecuted.current = true;
+      handleSend(qParam.trim());
+    }
+  }, [searchParams]);
 
   const handleSend = async (queryToSend?: string) => {
     const text = (queryToSend || inputQuery).trim();
